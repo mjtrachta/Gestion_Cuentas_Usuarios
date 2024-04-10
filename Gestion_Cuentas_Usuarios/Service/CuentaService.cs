@@ -69,5 +69,23 @@ namespace Gestion_Cuentas_Usuarios.Service
                 ESTADO = nuevaCuenta.ESTADO
             };
         }
+
+        public async Task<CuentaDto> GetById(int cuentaId)
+        {
+            var cuenta = await _dbContext.Cuentas.FindAsync(cuentaId);
+
+            if (cuenta == null)
+            {
+                return null;
+            }
+
+            return new CuentaDto
+            {
+                ID = cuenta.ID,
+                ID_CLIENTE = cuenta.ID_CLIENTE,
+                SALDO = cuenta.SALDO,
+                ESTADO = cuenta.ESTADO
+            };
+        }
     }
 }

@@ -9,5 +9,7 @@ namespace Gestion_Cuentas_Usuarios.Service.Interface
         Task<IEnumerable<CuentaDto>> GetAllCuentas();
         Task<IEnumerable<CuentaDto>> GetCuentasByCliente(int clienteId);
         Task<CuentaDto> CreateCuenta(int clienteId);
+
+        Task<CuentaDto> GetById(int cuentaId);
     }
 }

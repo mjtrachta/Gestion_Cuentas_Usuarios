@@ -12,6 +12,7 @@ builder.Services.AddDbContext<AppDbContext>(options =>
 // servicios de la aplicacion
 builder.Services.AddScoped<IClienteService, ClienteService>();
 builder.Services.AddScoped<ICuentaService, CuentaService>();
+builder.Services.AddScoped<ITransaccionesService, TransaccionesService>();
 
 // controladores y configura swagger
 builder.Services.AddControllers();
