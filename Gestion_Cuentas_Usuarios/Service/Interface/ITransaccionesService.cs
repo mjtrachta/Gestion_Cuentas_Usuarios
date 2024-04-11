@@ -4,6 +4,6 @@ namespace Gestion_Cuentas_Usuarios.Service.Interface
 {
     public interface ITransaccionesService
     {
-        Task<TransaccionesDto> RealizarDeposito(int cuentaId, decimal monto);
+        Task<IEnumerable<TransaccionesDto>> GetTransaccionesByTipo(int tipoMovimientoId);
     }
 }

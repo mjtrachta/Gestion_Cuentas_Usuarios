@@ -65,7 +65,7 @@ namespace Gestion_Cuentas_Usuarios.Service
             return clienteDto;
         }
 
-        // 2. Borrado (Logico) Cliente
+        // 4. Borrado (Logico) Cliente
         public async Task<bool> DeleteCliente(int id)
         {
             var cliente = await _dbContext.Clientes.FindAsync(id);

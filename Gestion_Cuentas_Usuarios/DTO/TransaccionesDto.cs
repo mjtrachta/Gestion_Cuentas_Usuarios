@@ -7,5 +7,8 @@
         public decimal MONTO { get; set; }
         public int ID_CUENTA { get; set; }
         public int ID_TIPO_MOVIMIENTO { get; set; }
+
+        //Join de tipo transaccion
+        public string NOMBRE_TIPO_MOVIMIENTO { get; set; }
     }
 }

@@ -18,7 +18,7 @@ namespace Gestion_Cuentas_Usuarios.Service
             _dbContext = dbContext;
         }
 
-        // Listar todas las cuentas 
+        // 1.Listar todas las cuentas 
         public async Task<IEnumerable<CuentaDto>> GetAllCuentas()
         {
             var cuentas = await _dbContext.Cuentas
@@ -34,7 +34,7 @@ namespace Gestion_Cuentas_Usuarios.Service
             return cuentas;
         }
 
-        // Listar cuentas por cliente 
+        // 2.Listar cuentas por cliente 
         public async Task<IEnumerable<CuentaDto>> GetCuentasByCliente(int clienteId)
         {
             var cuentas = await _dbContext.Cuentas
@@ -51,7 +51,7 @@ namespace Gestion_Cuentas_Usuarios.Service
             return cuentas;
         }
 
-        // Crear cuenta para un cliente
+        // 3.Crear cuenta para un cliente
         public async Task<CuentaDto> CreateCuenta(int clienteId)
         {
             var nuevaCuenta = new Cuenta
@@ -73,7 +73,7 @@ namespace Gestion_Cuentas_Usuarios.Service
             };
         }
 
-        // Realizar Deposito
+        // 4.Realizar Deposito
         public async Task<TransaccionesDto> RealizarTransaccion(int cuentaId, decimal monto)
         {
             var cuenta = await _dbContext.Cuentas.FindAsync(cuentaId);
@@ -115,7 +115,7 @@ namespace Gestion_Cuentas_Usuarios.Service
             };
         }
 
-        //Realizar Transferencia
+        //5.Realizar Transferencia
         public async Task<bool> RealizarTransferencia(int cuentaOrigenId, int cuentaDestinoId, decimal monto)
         {
 
@@ -136,7 +136,7 @@ namespace Gestion_Cuentas_Usuarios.Service
                         return false; // El monto de la transferencia no es válido o excede el saldo de la cuenta de origen
                     }
 
-                    // Crear una nueva transacción para la cuenta de origen
+                    // Crea una nueva transaccion para la cuenta de origen
                     var transaccionOrigen = new Transacciones
                     {
                         FECHA_HORA = DateTime.Now,
@@ -145,7 +145,7 @@ namespace Gestion_Cuentas_Usuarios.Service
                         ID_TIPO_MOVIMIENTO = 2 // 2 representa el tipo de transacción "Transferencia saliente"
                     };
 
-                    // Crear una nueva transacción para la cuenta de destino
+                    // Crea una nueva transaccion para la cuenta de destino
                     var transaccionDestino = new Transacciones
                     {
                         FECHA_HORA = DateTime.Now,
@@ -154,7 +154,7 @@ namespace Gestion_Cuentas_Usuarios.Service
                         ID_TIPO_MOVIMIENTO = 3 // 3 representa el tipo de transacción "Transferencia entrante"
                     };
 
-                    // Actualizar los saldos de las cuentas
+                    // Actualiza los saldos de las cuentas
                     cuentaOrigen.SALDO -= monto;
                     cuentaDestino.SALDO += monto;
 
@@ -165,16 +165,16 @@ namespace Gestion_Cuentas_Usuarios.Service
 
                     await transaction.CommitAsync(); // Commit de la transacción
 
-                    return true; // La transferencia se completó con éxito
+                    return true; // La transferencia se completo con exito
                 }
                 catch (Exception)
                 {
-                    await transaction.RollbackAsync(); // Rollback de la transacción en caso de error
-                    return false; // La transferencia no se pudo completar
+                    await transaction.RollbackAsync(); // Rollback de la transaccion en caso de error
+                    return false; // La transferencisa no se pudo completar
                 }
             }
         }
-
+        //6. Consultar transacciones por cuenta
         public async Task<IEnumerable<TransaccionesDto>> GetTransaccionesByCuenta(int cuentaId)
         {
             var transacciones = await _dbContext.Transacciones
@@ -191,7 +191,7 @@ namespace Gestion_Cuentas_Usuarios.Service
 
             return transacciones;
         }
-
+        //7. calcular saldo total de un cliente entre todas sus cuentas
         public async Task<decimal> CalcularSaldoCliente(int clienteId)
         {
             var cuentas = await _dbContext.Cuentas
