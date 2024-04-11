@@ -1,44 +1,23 @@
-﻿using System;
-using Gestion_Cuentas_Usuarios;
-using Gestion_Cuentas_Usuarios.Entidades;
+﻿using Gestion_Cuentas_Usuarios.DTO;
 using Gestion_Cuentas_Usuarios.Service.Interface;
-using Microsoft.EntityFrameworkCore;
+using System;
+using System.Threading.Tasks;
 
-public class TransaccionesService : ITransaccionesService
+namespace Gestion_Cuentas_Usuarios.Service
 {
-    private readonly AppDbContext _dbContext;
-
-    public TransaccionesService(AppDbContext dbContext)
+    public class TransaccionesService : ITransaccionesService
     {
-        _dbContext = dbContext;
-    }
+        private readonly ICuentaService _cuentaService;
 
-    public async Task<bool> RealizarDeposito(int idCuenta, decimal monto)
-    {
-        // Validar que la cuenta exista y esté activa
-        var cuenta = await _dbContext.Cuentas.FindAsync(idCuenta);
-        if (cuenta == null || cuenta.ESTADO != 1)
+        public TransaccionesService(ICuentaService cuentaService)
         {
-            return false;
+            _cuentaService = cuentaService;
         }
 
-        // Registrar la transacción
-        var transaccion = new Transacciones
+        public async Task<TransaccionesDto> RealizarDeposito(int cuentaId, decimal monto)
         {
-            ID_TIPO_MOVIMIENTO = 1, // Tipo de movimiento: Depósito
-            MONTO = monto,
-            ID_CUENTA = idCuenta,
-            FECHA_HORA = DateTime.Now
-        };
-
-        _dbContext.Transacciones.Add(transaccion);
-
-        // Actualizar el saldo de la cuenta
-        cuenta.SALDO += monto;
-
-        // Guardar los cambios
-        await _dbContext.SaveChangesAsync();
-
-        return true;
+            // Llama al método en el servicio de cuentas para realizar la transacción
+            return await _cuentaService.RealizarTransaccion(cuentaId, monto);
+        }
     }
 }

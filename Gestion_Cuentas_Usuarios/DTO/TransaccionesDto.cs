@@ -2,7 +2,7 @@
 {
     public class TransaccionesDto
     {
-        public string ID_TRANSACCION { get; set; }
+        public long ID_TRANSACCION { get; set; }
         public DateTime FECHA_HORA { get; set; }
         public decimal MONTO { get; set; }
         public int ID_CUENTA { get; set; }

@@ -1,7 +1,9 @@
-﻿namespace Gestion_Cuentas_Usuarios.Service.Interface
+﻿using Gestion_Cuentas_Usuarios.DTO;
+
+namespace Gestion_Cuentas_Usuarios.Service.Interface
 {
     public interface ITransaccionesService
     {
-        Task<bool> RealizarDeposito(int idCuenta, decimal monto);
+        Task<TransaccionesDto> RealizarDeposito(int cuentaId, decimal monto);
     }
 }

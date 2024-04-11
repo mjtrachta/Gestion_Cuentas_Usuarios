@@ -10,6 +10,13 @@ namespace Gestion_Cuentas_Usuarios.Service.Interface
         Task<IEnumerable<CuentaDto>> GetCuentasByCliente(int clienteId);
         Task<CuentaDto> CreateCuenta(int clienteId);
 
-        Task<CuentaDto> GetById(int cuentaId);
+      
+        Task<TransaccionesDto> RealizarTransaccion(int cuentaId, decimal monto);
+
+        Task<bool> RealizarTransferencia(int cuentaOrigenId, int cuentaDestinoId, decimal monto);
+
+        Task<IEnumerable<TransaccionesDto>> GetTransaccionesByCuenta(int cuentaId);
+
+        Task<decimal> CalcularSaldoCliente(int clienteId);
     }
 }
